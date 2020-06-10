@@ -1,0 +1,92 @@
+loop
+{
+	sleep, 10
+	if GetKeyState("m")
+	loop
+	{
+		sleep 500
+		ClanTagRotate1()
+	}
+}
+reload
+
+ClanTagRotate1()
+{
+	i=1
+	while, (i<10)
+	{
+		ShiftStep(10-i)
+		i ++
+	}
+}
+
+ClanTagRotate2()
+{
+	i=1
+	while, (i<10)
+	{
+		ShiftStep(i)
+		i ++
+	}
+}
+
+ShiftStep(numpaddigit)
+{
+		sleep 500
+		
+		ShiftPause()
+		
+		Send, % "{Numpad" numpaddigit "}"
+		
+		if GetKeyState("n")
+		reload
+		
+		ShiftPause()
+}
+
+ShiftPause()
+{
+			Hold2Stop("Shift")
+			Hold2Stop("Ctrl")
+			PauseKeys("k", "Esc")
+			Pause2Keys("l", "Enter", "Esc")
+}
+
+Pause2Keys(key2start, key2stop, key3stop)
+{
+	if GetKeyState(key2start)
+			{
+			loop
+			{
+				sleep 10
+				if (GetKeyState(key2stop) or GetKeyState(key3stop))
+				break
+			}
+			}
+}
+
+PauseKeys(key2start, key2stop)
+{
+	if GetKeyState(key2start)
+			{
+			loop
+			{
+				sleep 10
+				if GetKeyState(key2stop)
+				break
+			}
+			}
+}
+
+Hold2Stop(key)
+{
+	if GetKeyState(key)
+			{
+			loop
+			{
+				sleep 10
+				if !GetKeyState(key)
+				break
+			}
+			}
+}
